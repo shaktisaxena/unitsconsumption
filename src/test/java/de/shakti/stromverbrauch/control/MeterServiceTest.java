@@ -22,7 +22,6 @@ class MeterServiceTest {
     @Mock
     MeterDAOImpl meterDAO;
 
-
     @Test
     void createMeterEntry() {
         //Arrange

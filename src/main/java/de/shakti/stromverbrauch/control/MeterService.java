@@ -1,6 +1,7 @@
 package de.shakti.stromverbrauch.control;
 
 import de.shakti.stromverbrauch.entity.Meter;
+import de.shakti.stromverbrauch.exceptions.CustomParameterConstraintException;
 import de.shakti.stromverbrauch.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,8 @@ public class MeterService {
      * @param meter Meter Object
      * @return the object after persisting
      */
-    public Meter createMeterEntry(Meter meter) {
+    public Meter createMeterEntry(Meter meter)  {
+
         return meterDAO.save(meter);
 
     }

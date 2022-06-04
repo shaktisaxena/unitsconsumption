@@ -6,13 +6,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.geo.Metric;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @RestController
@@ -23,8 +26,8 @@ public class MeterController {
     public static final String ROOT_MAPPING = "/v1";
     private final MeterService meterService;
 
-    @PostMapping("/meter")
-    public ResponseEntity<Metric> createMeterPosition(@RequestBody final Meter meter, final UriComponentsBuilder uriComponentsBuilder) {
+    @PostMapping(value = "/meter",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Metric> createMeterPosition(@Valid @RequestBody  final Meter meter, final UriComponentsBuilder uriComponentsBuilder) throws Exception {
         final var meterEntry = meterService.createMeterEntry(meter);
         final HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponentsBuilder.path(ROOT_MAPPING + "/{id}").buildAndExpand(meterEntry.getId()).toUri());
@@ -38,7 +41,7 @@ public class MeterController {
     }
 
     @DeleteMapping("/meters/{id}")
-    public ResponseEntity<Metric> removeMeterReading(@PathVariable @NotEmpty @NotBlank  final String id) {
+    public ResponseEntity<Metric> removeMeterReading(@PathVariable @NotEmpty @NotBlank @NotNull  final String id) {
         meterService.removeMeterReading(id);
         return new ResponseEntity(HttpStatus.OK);
     }

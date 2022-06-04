@@ -10,6 +10,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
@@ -18,10 +19,13 @@ import java.time.LocalDate;
 public class Meter {
     @Id
     private String id;
+    @NotNull
     private Position position;
+    @NotNull
     private Reading reading;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate timeStamp;
+
 }
