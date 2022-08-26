@@ -7,7 +7,7 @@ import de.flapdoodle.embed.mongo.config.MongodConfig;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
-import de.shakti.stromverbrauch.entity.Meter;
+import de.shakti.stromverbrauch.entity.ElectricMeter;
 import de.shakti.stromverbrauch.entity.Position;
 import de.shakti.stromverbrauch.entity.READINGTYPE;
 import de.shakti.stromverbrauch.entity.Reading;
@@ -38,14 +38,14 @@ class MeterDAOImplIntegrationTest {
     @Test
    public void save() {
         //arrange
-        Meter meter = getMeter();
+        ElectricMeter electricMeter = getMeter();
         //action
-        Meter _actual=mongoRepository.save(meter);
+        ElectricMeter _actual=mongoRepository.save(electricMeter);
 
         MeterDAOImpl meterDAO= new MeterDAOImpl(mongoRepository);
-        meterDAO.save(meter);
+        meterDAO.save(electricMeter);
 
-        assertEquals(meter,_actual);
+        assertEquals(electricMeter,_actual);
 
 
     }
@@ -54,28 +54,28 @@ class MeterDAOImplIntegrationTest {
     void readMeter() {
 
         //arrange
-        Meter meter = getMeter();
+        ElectricMeter electricMeter = getMeter();
         //action
-        mongoRepository.save(meter);
-        Optional<Meter> _actual=mongoRepository.findById(meter.getId());
+        mongoRepository.save(electricMeter);
+        Optional<ElectricMeter> _actual=mongoRepository.findById(electricMeter.getId());
 
         MeterDAOImpl meterDAO= new MeterDAOImpl(mongoRepository);
-        meterDAO.readMeter(meter.getId());
+        meterDAO.readMeter(electricMeter.getId());
 
-        assertEquals(meter.getId(),(_actual.get()).getId());
+        assertEquals(electricMeter.getId(),(_actual.get()).getId());
     }
 
     @Test
     void deleteMeter() {
     }
 
-    private Meter getMeter() {
-        Meter meter = Meter.builder()
+    private ElectricMeter getMeter() {
+        ElectricMeter electricMeter = ElectricMeter.builder()
                 .id("200000")
                 .position(Position.ELECTRICITY)
                 .reading(Reading.builder().readingtype(READINGTYPE.HT).units(100)
                         .build()).build();
-        return meter;
+        return electricMeter;
     }
 
 

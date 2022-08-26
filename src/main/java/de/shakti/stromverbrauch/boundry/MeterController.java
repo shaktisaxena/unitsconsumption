@@ -1,7 +1,7 @@
 package de.shakti.stromverbrauch.boundry;
 
 import de.shakti.stromverbrauch.control.MeterService;
-import de.shakti.stromverbrauch.entity.Meter;
+import de.shakti.stromverbrauch.entity.ElectricMeter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.geo.Metric;
 import org.springframework.http.HttpHeaders;
@@ -27,8 +27,8 @@ public class MeterController {
     private final MeterService meterService;
 
     @PostMapping(value = "/meter",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Metric> createMeterPosition(@Valid @RequestBody  final Meter meter, final UriComponentsBuilder uriComponentsBuilder) throws Exception {
-        final var meterEntry = meterService.createMeterEntry(meter);
+    public ResponseEntity<Metric> createMeterPosition(@Valid @RequestBody  final ElectricMeter electricMeter, final UriComponentsBuilder uriComponentsBuilder) throws Exception {
+        final var meterEntry = meterService.createMeterEntry(electricMeter);
         final HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponentsBuilder.path(ROOT_MAPPING + "/{id}").buildAndExpand(meterEntry.getId()).toUri());
         return new ResponseEntity(meterEntry, headers, HttpStatus.CREATED);
@@ -47,8 +47,8 @@ public class MeterController {
     }
 
     @PutMapping("/meter")
-    public ResponseEntity<Metric> updateMeterPosition(@RequestBody final Meter meter, final UriComponentsBuilder uriComponentsBuilder) {
-        final var meterEntry = meterService.updateMeter(meter);
+    public ResponseEntity<Metric> updateMeterPosition(@RequestBody final ElectricMeter electricMeter, final UriComponentsBuilder uriComponentsBuilder) {
+        final var meterEntry = meterService.updateMeter(electricMeter);
         final HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponentsBuilder.path(ROOT_MAPPING + "/{id}").buildAndExpand(meterEntry.getId()).toUri());
 

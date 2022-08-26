@@ -1,7 +1,6 @@
 package de.shakti.stromverbrauch.control;
 
-import de.shakti.stromverbrauch.entity.Meter;
-import de.shakti.stromverbrauch.exceptions.CustomParameterConstraintException;
+import de.shakti.stromverbrauch.entity.ElectricMeter;
 import de.shakti.stromverbrauch.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,12 +13,12 @@ public class MeterService {
 
     /**
      * Persist a new Meter Object.
-     * @param meter Meter Object
+     * @param electricMeter Meter Object
      * @return the object after persisting
      */
-    public Meter createMeterEntry(Meter meter)  {
+    public ElectricMeter createMeterEntry(ElectricMeter electricMeter)  {
 
-        return meterDAO.save(meter);
+        return meterDAO.save(electricMeter);
 
     }
 
@@ -29,7 +28,7 @@ public class MeterService {
      * @param meterId
      * @return
      */
-    public Meter getMeterReading(String meterId) {
+    public ElectricMeter getMeterReading(String meterId) {
 
         return meterDAO.readMeter(meterId).orElseThrow(
                 () -> new ResourceNotFoundException("Meter not found with meterId " + meterId));
@@ -50,11 +49,11 @@ public class MeterService {
 
     /**
      * overwrites meter content
-     * @param meter
+     * @param electricMeter
      * @return
      */
-    public Meter updateMeter(Meter meter) {
-        return meterDAO.save(meter);
+    public ElectricMeter updateMeter(ElectricMeter electricMeter) {
+        return meterDAO.save(electricMeter);
 
     }
 }

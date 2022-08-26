@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 @Document(collection = "meter")
-public class Meter {
+public class ElectricMeter {
     @Id
     private String id;
     @NotNull

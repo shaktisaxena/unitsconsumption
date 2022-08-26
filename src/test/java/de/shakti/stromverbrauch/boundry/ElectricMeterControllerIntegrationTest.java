@@ -3,7 +3,7 @@ package de.shakti.stromverbrauch.boundry;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.shakti.stromverbrauch.control.MeterService;
-import de.shakti.stromverbrauch.entity.Meter;
+import de.shakti.stromverbrauch.entity.ElectricMeter;
 import de.shakti.stromverbrauch.entity.Position;
 import de.shakti.stromverbrauch.entity.READINGTYPE;
 import de.shakti.stromverbrauch.entity.Reading;
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MeterController.class)
-class MeterControllerIntegrationTest {
+class ElectricMeterControllerIntegrationTest {
 
     @MockBean
     private MeterService meterService;
@@ -63,23 +63,23 @@ class MeterControllerIntegrationTest {
     void updateMeterPosition() {
     }
 
-    private Meter getMeter() {
-        Meter meter = Meter.builder()
+    private ElectricMeter getMeter() {
+        ElectricMeter electricMeter = ElectricMeter.builder()
                 .id("1L")
                 .position(Position.ELECTRICITY)
                 .reading(Reading.builder().readingtype(READINGTYPE.HT).units(100)
                         .build()).build();
-        return meter;
+        return electricMeter;
     }
 
     private String getMeterAsJsonString() throws JsonProcessingException {
-        Meter meter = Meter.builder()
+        ElectricMeter electricMeter = ElectricMeter.builder()
                 .position(Position.ELECTRICITY)
                 .reading(Reading.builder().readingtype(READINGTYPE.HT).units(100)
                         .build()).build();
 
         ObjectMapper mapper = new ObjectMapper();
-        String meterJsonString= mapper.writeValueAsString(meter);
+        String meterJsonString= mapper.writeValueAsString(electricMeter);
         return meterJsonString;
     }
 }

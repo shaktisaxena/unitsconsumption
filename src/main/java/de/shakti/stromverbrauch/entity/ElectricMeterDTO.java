@@ -3,7 +3,7 @@ package de.shakti.stromverbrauch.entity;
 import lombok.Data;
 
 @Data
-public class MeterDTO {
+public class ElectricMeterDTO {
     private String position;
 
 }

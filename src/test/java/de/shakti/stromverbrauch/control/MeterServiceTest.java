@@ -1,6 +1,6 @@
 package de.shakti.stromverbrauch.control;
 
-import de.shakti.stromverbrauch.entity.Meter;
+import de.shakti.stromverbrauch.entity.ElectricMeter;
 import de.shakti.stromverbrauch.entity.Position;
 import de.shakti.stromverbrauch.entity.READINGTYPE;
 import de.shakti.stromverbrauch.entity.Reading;
@@ -25,20 +25,20 @@ class MeterServiceTest {
     @Test
     void createMeterEntry() {
         //Arrange
-        ArgumentCaptor<Meter> argumentCaptor= ArgumentCaptor.forClass(Meter.class);
-        Meter meter = getMeter();
-        when(meterDAO.save(meter)).thenReturn(meter);
+        ArgumentCaptor<ElectricMeter> argumentCaptor= ArgumentCaptor.forClass(ElectricMeter.class);
+        ElectricMeter electricMeter = getMeter();
+        when(meterDAO.save(electricMeter)).thenReturn(electricMeter);
         MeterService meterService= new MeterService(meterDAO);
 
 
         //Action
-        Meter _expected= meterService.createMeterEntry(meter);
+        ElectricMeter _expected= meterService.createMeterEntry(electricMeter);
 
         //Assert
-        Assertions.assertEquals(_expected,meter);
-        verify(meterDAO,atMost(1)).save(meter);
+        Assertions.assertEquals(_expected, electricMeter);
+        verify(meterDAO,atMost(1)).save(electricMeter);
         verify(meterDAO).save(argumentCaptor.capture());
-        Assertions.assertEquals(meter,argumentCaptor.getValue());
+        Assertions.assertEquals(electricMeter,argumentCaptor.getValue());
 
     }
 
@@ -46,19 +46,19 @@ class MeterServiceTest {
     void getMeterReading() {
         //Arrange
         ArgumentCaptor<String> argumentCaptor= ArgumentCaptor.forClass(String.class);
-        Meter meter = getMeter();
-        when(meterDAO.readMeter(meter.getId())).thenReturn(Optional.of(meter));
+        ElectricMeter electricMeter = getMeter();
+        when(meterDAO.readMeter(electricMeter.getId())).thenReturn(Optional.of(electricMeter));
         MeterService meterService= new MeterService(meterDAO);
 
 
         //Action
-        Meter _expected= meterService.getMeterReading(meter.getId());
+        ElectricMeter _expected= meterService.getMeterReading(electricMeter.getId());
 
         //Assert
-        Assertions.assertEquals(_expected,meter);
-        verify(meterDAO,atMost(1)).readMeter(meter.getId());
+        Assertions.assertEquals(_expected, electricMeter);
+        verify(meterDAO,atMost(1)).readMeter(electricMeter.getId());
         verify(meterDAO).readMeter(argumentCaptor.capture());
-        assertEquals(meter.getId(),argumentCaptor.getValue());
+        assertEquals(electricMeter.getId(),argumentCaptor.getValue());
 
     }
 
@@ -67,21 +67,21 @@ class MeterServiceTest {
 
         //Arrange
         ArgumentCaptor<String> argumentCaptor= ArgumentCaptor.forClass(String.class);
-        Meter meter = getMeter();
-        when(meterDAO.readMeter(meter.getId())).thenReturn(Optional.of(meter));
-        doNothing().when(meterDAO).deleteMeter(meter.getId());
+        ElectricMeter electricMeter = getMeter();
+        when(meterDAO.readMeter(electricMeter.getId())).thenReturn(Optional.of(electricMeter));
+        doNothing().when(meterDAO).deleteMeter(electricMeter.getId());
         MeterService meterService= new MeterService(meterDAO);
 
 
         //Action
-        meterService.removeMeterReading(meter.getId());
+        meterService.removeMeterReading(electricMeter.getId());
 
         //Assert
-        verify(meterDAO,atMost(1)).deleteMeter(meter.getId());
-        verify(meterDAO,atMost(1)).readMeter(meter.getId());
+        verify(meterDAO,atMost(1)).deleteMeter(electricMeter.getId());
+        verify(meterDAO,atMost(1)).readMeter(electricMeter.getId());
         verify(meterDAO).deleteMeter(argumentCaptor.capture());
 
-        assertEquals(meter.getId(),argumentCaptor.getValue());
+        assertEquals(electricMeter.getId(),argumentCaptor.getValue());
 
     }
 
@@ -90,12 +90,12 @@ class MeterServiceTest {
     void updateMeter() {
     }
 
-    private Meter getMeter() {
-        Meter meter = Meter.builder()
+    private ElectricMeter getMeter() {
+        ElectricMeter electricMeter = ElectricMeter.builder()
                             .id("200000")
                             .position(Position.ELECTRICITY)
                              .reading(Reading.builder().readingtype(READINGTYPE.HT).units(100)
                                      .build()).build();
-        return meter;
+        return electricMeter;
     }
 }
